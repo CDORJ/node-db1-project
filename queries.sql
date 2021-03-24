@@ -41,7 +41,7 @@ FROM Customers
 WHERE City = 'London' OR City = 'Madrid' OR City = 'Brazil'
 ORDER BY City Asc
 
-//NOTE There were no customers living in Brazil:
+
 -- CustomerID	CustomerName	ContactName	Address	City	PostalCode	Country
 -- 4	Around the Horn	Thomas Hardy	120 Hanover Sq.	London	WA1 1DP	UK
 -- 11	B's Beverages	Victoria Ashworth	Fauntleroy Circus	London	EC2 5NT	UK
@@ -51,7 +51,16 @@ ORDER BY City Asc
 -- 72	Seven Seas Imports	Hari Kumar	90 Wadhurst Rd.	London	OX15 4NB	UK
 -- 8	Bólido Comidas preparadas	Martín Sommer	C/ Araquil, 67	Madrid	28023	Spain
 -- 22	FISSA Fabrica Inter. Salchichas S.A.	Diego Roel	C/ Moralzarzal, 86	Madrid	28034	Spain
--- 69	Romero y tomillo	Alejandra Camino	Gran Vía, 1	Madrid	28001	Spain
+-- -- 69	Romero y tomillo	Alejandra Camino	Gran Vía, 1	Madrid	28001	Spain
+-- 15	Comércio Mineiro	Pedro Afonso	Av. dos Lusíadas, 23	São Paulo	05432-043	Brazil
+-- 21	Familia Arquibaldo	Aria Cruz	Rua Orós, 92	São Paulo	05442-030	Brazil
+-- 31	Gourmet Lanchonetes	André Fonseca	Av. Brasil, 442	Campinas	04876-786	Brazil
+-- 34	Hanari Carnes	Mario Pontes	Rua do Paço, 67	Rio de Janeiro	05454-876	Brazil
+-- 61	Que Delícia	Bernardo Batista	Rua da Panificadora, 12	Rio de Janeiro	02389-673	Brazil
+-- 62	Queen Cozinha	Lúcia Carvalho	Alameda dos Canàrios, 891	São Paulo	05487-020	Brazil
+-- 67	Ricardo Adocicados	Janete Limeira	Av. Copacabana, 267	Rio de Janeiro	02389-890	Brazil
+-- 81	Tradição Hipermercados	Anabela Domingues	Av. Inês de Castro, 414	São Paulo	05634-030	Brazil
+-- 88	Wellington Importadora	Paula Parente	Rua do Mercado, 12	Resende	08737-363	Brazil
 
 -- Add a customer record for "The Shire", the contact name is "Bilbo Baggins" the address is -"1 Hobbit-Hole" in "Bag End", postal code "111" and the country is "Middle Earth"
 
