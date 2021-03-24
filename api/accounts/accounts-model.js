@@ -5,20 +5,26 @@ async const getAll = () => {
   return account;
 }
 
-const getById = id => {
-  // DO YOUR MAGIC
+async function getById(id) {
+  const account = await db('accounts').where({ id });
+  return account;
 }
 
-const create = async account => {
-  // DO YOUR MAGIC
+async function create(body){
+  const newId = await db('accounts').insert(body);
+  const newAcct = getById(newId);
+  return newAcct;
 }
 
-const updateById = async (id, account) => {
-  // DO YOUR MAGIC
+async function updateById(id, account){
+  const updatedId = await db('accounts').update(account).where({ id });
+  const updatedAccount = getById(updatedId);
+  return updatedAccount;
 }
 
-const deleteById = async id => {
-  // DO YOUR MAGIC
+async function deleteById(id){
+  const deleteAcct = await db('accounts').where({ id }).del();
+  return deleteAcct;
 }
 
 module.exports = {

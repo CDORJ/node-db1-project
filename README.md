@@ -62,11 +62,11 @@ npx knex seed:run
 
 - Write the following db access functions inside `api/accounts/accounts-model.js` using Knex:
 
-  - `getAll` resolves to an array of accounts (or an empty array)
-  - `getById` resolves to an account by the given id
-  - `create` resolves to the newly created account
-  - `updateById` resolves to the updated account
-  - `deleteById` resolves to the deleted account
+✔️- `getAll` resolves to an array of accounts (or an empty array)
+✔️- `getById` resolves to an account by the given id
+✔️- `create` resolves to the newly created account
+✔️- `updateById` resolves to the updated account
+✔️- `deleteById` resolves to the deleted account
 
 #### Write Middleware
 
@@ -78,7 +78,7 @@ npx knex seed:run
     - If name is not a string, return `{ message: "name of account must be a string" }`
     - If the _trimmed_ name is shorter than 3 or longer than 100, return `{ message: "name of account must be between 3 and 100" }`
     - If budget is not a number, return `{ message: "budget of account must be a number" }`
-    - If budget is a negative number or over one million, return  `{ message: "budget of account is too large or too small" }`
+    - If budget is a negative number or over one million, return `{ message: "budget of account is too large or too small" }`
 
   - `checkAccountId` returns a status 404 with a `{ message: "account not found" }` if `req.params.id` does not exist in the database
 
