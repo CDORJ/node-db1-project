@@ -1,5 +1,8 @@
-const getAll = () => {
-  // DO YOUR MAGIC
+const db = require('../../data/db-config.js');
+
+async const getAll = () => {
+  const account = await db('accounts');
+  return account;
 }
 
 const getById = id => {
