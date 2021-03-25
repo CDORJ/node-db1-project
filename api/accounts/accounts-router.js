@@ -19,7 +19,7 @@ router.get("/:id", mw.checkAccountId, async (req, res, next) => {
   }
 });
 
-router.post("/", mw.checkAccountPayload, mw.checkAccountNameUnique, async (req, res, next) => {
+router.post("/", mw.checkAccountPayload,  async (req, res, next) => {
   const newAcct = req.body;
   try {
     const data = await Accounts.create(newAcct);

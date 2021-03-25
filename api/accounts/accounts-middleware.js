@@ -18,15 +18,32 @@ async function checkAccountPayload(req, res, next) {
   }
 }
 
-async function checkAccountNameUnique(req, res, next) {
-  const body = req.body;
-  const name = await Accounts.getAll();
-  if (body.name === name.name) {
-    next({ message: "That name is taken", status: 400 });
-  } else {
-    next();
-  }
-}
+// async function checkAccountNameUnique(req, res, next) {
+//   const body = req.body;
+//   const name = await Accounts.getAll();
+  
+//   // // name is currently an array of objects
+//   // map over name and check if we see the name from 
+//   // // the user's request in it, we wish to throw an error message
+//   // // otherwise, lets create the new account.
+
+ 
+//   // // try doing your search first, if the result is found
+//   // // create your statements
+//   // // if not found , still create your statements afterwards.
+  
+//   const foundName = name.map((info) => {
+    
+//     if (info.name === body.name) {
+//       return info;
+//     }
+//   })
+//   if (foundName.length > 0) {
+//     next({message: "this name is taken", status: 400})
+//   } else {
+//     next()
+//   }
+// }
 
 async function checkAccountId(req, res, next) {
   const { id } = req.params;
@@ -44,7 +61,6 @@ async function checkAccountId(req, res, next) {
 }
 
 module.exports = {
-  checkAccountPayload: checkAccountPayload,
-  checkAccountNameUnique: checkAccountNameUnique,
+  checkAccountPayload: checkAccountPayload,  
   checkAccountId: checkAccountId,
 };
