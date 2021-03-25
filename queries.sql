@@ -67,6 +67,11 @@ VALUES ('The Shire', 'Bilbo Baggins', '1 Hobbit-Hole', 'Bag End', '111', 'Middle
 
 -- Update Bilbo Baggins record so that the postal code changes to "11122"
 ----------------------------------
+UPDATE [CUSTOMERS] 
+SET [POSTALCODE] = '11122'
+WHERE [CONTACTNAME] = 'Bilbo Baggins'
+----------------------------------
+-- 92	The Shire	Bilbo Baggins	1 Hobbit-Hole	Bag End	11122	Middle Earth
 ----------------------------------
 
 -- (Stretch) Find a query to discover how many different cities are stored in the Customers table. Repeats should not be double counted
