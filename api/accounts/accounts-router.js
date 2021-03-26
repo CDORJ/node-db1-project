@@ -2,23 +2,6 @@ const router = require("express").Router();
 const Account = require("./accounts-model.js");
 const MW = require("./accounts-middleware.js");
 
-// async function checkAccountId(req, res, next) {
-//   try {
-//     const account = await Account.getById(req.params.id);
-//     if (account) {
-//       req.account = account;
-//       next();
-//     } else {
-//       const err = new Error("id not found");
-//       err.statusCode = 404;
-//       next(err);
-//     }
-//   } catch (error) {
-//     err.statusCode = 500;
-//     next(error);
-//   }
-// }
-
 router.get("/", async (req, res, next) => {
   // DO YOUR MAGIC
   // returns an array of accounts (or an empty array if there aren't any).
@@ -36,19 +19,42 @@ router.get("/:id", MW.checkAccountId, (req, res) => {
   res.status(200).json(req.account);
 });
 
-router.post("/", (req, res, next) => {
+router.post("/", MW.checkAccountPayload, async (req, res, next) => {
   // DO YOUR MAGIC
   // returns the created account. Leading or trailing whitespace on budget name should be trimmed before saving to db.
+  try {
+    const account = await Account.create(req.body);
+    res.status(201).json(account);
+  } catch (err) {
+    next(err);
+  }
 });
 
-router.put("/:id", (req, res, next) => {
-  // DO YOUR MAGIC
-  // returns the updated account. Leading or trailing whitespace on budget name should be trimmed before saving to db.
-});
+router.put(
+  "/:id",
+  MW.checkAccountId,
+  MW.checkAccountPayload,
+  async (req, res, next) => {
+    // DO YOUR MAGIC
+    // returns the updated account. Leading or trailing whitespace on budget name should be trimmed before saving to db.
+    try {
+      const account = await Account.updateById(req.params.id, req.body);
+      res.json(account);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
 
-router.delete("/:id", (req, res, next) => {
+router.delete("/:id", MW.checkAccountId, async (req, res, next) => {
   // DO YOUR MAGIC
   // returns the deleted account.
+  try {
+    const account = await Account.deleteById(req.params.id);
+    res.json(account);
+  } catch (error) {
+    next(error);
+  }
 });
 
 router.use((err, req, res, next) => {

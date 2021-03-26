@@ -15,19 +15,23 @@ const getById = (id) => {
   return account;
 };
 
-const create = async (account) => {
+const create = async (newAccount) => {
   // resolves to the newly created account
   // DO YOUR MAGIC
+  const account = await db("accounts").insert(newAccount);
+  return account;
 };
 
-const updateById = async (id, account) => {
+const updateById = (id, newAccount) => {
   // resolves to the updated account
   // DO YOUR MAGIC
+  return db("accounts").update(newAccount).where({ id });
 };
 
 const deleteById = async (id) => {
   // resolves to the deleted account
   // DO YOUR MAGIC
+  return db("accounts").del().where({ id });
 };
 
 module.exports = {
