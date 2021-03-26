@@ -1,22 +1,23 @@
 const router = require("express").Router();
 const Account = require("./accounts-model.js");
+const MW = require("./accounts-middleware.js");
 
-async function checkId(req, res, next) {
-  try {
-    const account = await Account.getById(req.params.id);
-    if (account) {
-      req.account = account;
-      next();
-    } else {
-      const err = new Error("id not found");
-      err.statusCode = 404;
-      next(err);
-    }
-  } catch (error) {
-    err.statusCode = 500;
-    next(error);
-  }
-}
+// async function checkAccountId(req, res, next) {
+//   try {
+//     const account = await Account.getById(req.params.id);
+//     if (account) {
+//       req.account = account;
+//       next();
+//     } else {
+//       const err = new Error("id not found");
+//       err.statusCode = 404;
+//       next(err);
+//     }
+//   } catch (error) {
+//     err.statusCode = 500;
+//     next(error);
+//   }
+// }
 
 router.get("/", async (req, res, next) => {
   // DO YOUR MAGIC
@@ -29,7 +30,7 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-router.get("/:id", checkId, (req, res) => {
+router.get("/:id", MW.checkAccountId, (req, res) => {
   // DO YOUR MAGIC
   // returns an account by the given id.
   res.status(200).json(req.account);

@@ -1,3 +1,5 @@
+const Account = require("./accounts-model.js");
+
 exports.checkAccountPayload = (req, res, next) => {
   // returns a status 400 with if req.body is invalid:
   // DO YOUR MAGIC
@@ -16,4 +18,18 @@ exports.checkAccountPayload = (req, res, next) => {
 exports.checkAccountId = async (req, res, next) => {
   // DO YOUR MAGIC
   // returns a status 404 with a { message: "account not found" } if req.params.id does not exist in the database
+  try {
+    const account = await Account.getById(req.params.id);
+    if (account) {
+      req.account = account;
+      next();
+    } else {
+      const err = new Error("account not found");
+      err.statusCode = 404;
+      next(err);
+    }
+  } catch (error) {
+    error.statusCode = 500;
+    next(error);
+  }
 };
