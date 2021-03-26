@@ -8,10 +8,10 @@ exports.checkAccountPayload = (req, res, next) => {
   // If budget is a negative number or over one million, return { message: "budget of account is too large or too small" }
 };
 
-exports.checkAccountNameUnique = async (req, res, next) => {
-  // DO YOUR MAGIC
-  // returns a status 400 with a { message: "that name is taken" } if the trimmed req.body.name already exists in the database
-};
+// exports.checkAccountNameUnique = async (req, res, next) => { -- In migrations file the '.unique' takes care of this middleware
+//   // DO YOUR MAGIC
+//   // returns a status 400 with a { message: "that name is taken" } if the trimmed req.body.name already exists in the database
+// };
 
 exports.checkAccountId = async (req, res, next) => {
   // DO YOUR MAGIC

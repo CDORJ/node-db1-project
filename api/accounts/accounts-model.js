@@ -1,11 +1,18 @@
+// reference: http://knexjs.org/
+
+const db = require("../../data/db-config");
+
 const getAll = () => {
   // resolves to an array of accounts (or an empty array)
   // DO YOUR MAGIC
+  return db("accounts");
 };
 
 const getById = (id) => {
   //  resolves to an account by the given id
   // DO YOUR MAGIC
+  const account = db("accounts").where({ id }).first();
+  return account;
 };
 
 const create = async (account) => {

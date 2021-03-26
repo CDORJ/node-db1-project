@@ -73,6 +73,11 @@ WHERE [CONTACTNAME] = 'Bilbo Baggins'
 ----------------------------------
 -- 92	The Shire	Bilbo Baggins	1 Hobbit-Hole	Bag End	11122	Middle Earth
 ----------------------------------
+--  delete for reference
+----------------------------------
+-- DELETE FROM [CUSTOMERS] 
+-- WHERE [CITY] = 'Silicon Valley'
+----------------------------------
 
 -- (Stretch) Find a query to discover how many different cities are stored in the Customers table. Repeats should not be double counted
 
