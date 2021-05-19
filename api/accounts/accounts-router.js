@@ -10,12 +10,23 @@ router.get("/", async (req, res, next) => {
 router.get("/:id", async (req, res, next) => {
   // DO YOUR MAGIC
   const { id } = req.params;
-  const account = await Accounts.getById(id);
-  res.status(200).json(account);
+  const accounts = await Accounts.getById(id);
+  const specificAccount = accounts[0];
+
+  if (!specificAccount) {
+    res.status(404).json({ message: "account not found" });
+  } else {
+    res.status(200).json(specificAccount);
+  }
 });
 
-router.post("/", (req, res, next) => {
+router.post("/", async (req, res, next) => {
   // DO YOUR MAGIC
+  const newAccountInfo = req.body;
+  const newAccountID = await Accounts.create(newAccountInfo)[0];
+  const newAccount = await Accounts.getById(newAccountID);
+
+  res.status(200).json(newAccount);
 });
 
 router.put("/:id", (req, res, next) => {
