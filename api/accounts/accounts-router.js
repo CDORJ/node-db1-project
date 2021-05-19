@@ -45,8 +45,19 @@ router.put("/:id", async (req, res, next) => {
   }
 });
 
-router.delete("/:id", (req, res, next) => {
+router.delete("/:id", async (req, res, next) => {
   // DO YOUR MAGIC
+  const { id } = req.params;
+  const [accountToDelete] = await Accounts.getById(id);
+  const confirmation = await Accounts.deleteById(id);
+
+  if (!accountToDelete) {
+    res.status(404).json({ message: "account not found" });
+  }
+
+  if (confirmation) {
+    res.status(200).json(accountToDelete);
+  }
 });
 
 router.use((err, req, res, next) => {
