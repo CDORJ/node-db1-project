@@ -7,8 +7,11 @@ router.get("/", async (req, res, next) => {
   res.status(200).json(accounts);
 });
 
-router.get("/:id", (req, res, next) => {
+router.get("/:id", async (req, res, next) => {
   // DO YOUR MAGIC
+  const { id } = req.params;
+  const account = await Accounts.getById(id);
+  res.status(200).json(account);
 });
 
 router.post("/", (req, res, next) => {
