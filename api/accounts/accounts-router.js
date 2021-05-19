@@ -10,8 +10,7 @@ router.get("/", async (req, res, next) => {
 router.get("/:id", async (req, res, next) => {
   // DO YOUR MAGIC
   const { id } = req.params;
-  const accounts = await Accounts.getById(id);
-  const specificAccount = accounts[0];
+  const [specificAccount] = await Accounts.getById(id);
 
   if (!specificAccount) {
     res.status(404).json({ message: "account not found" });
@@ -23,14 +22,27 @@ router.get("/:id", async (req, res, next) => {
 router.post("/", async (req, res, next) => {
   // DO YOUR MAGIC
   const newAccountInfo = req.body;
-  const newAccountID = await Accounts.create(newAccountInfo)[0];
-  const newAccount = await Accounts.getById(newAccountID);
+  const [newAccountID] = await Accounts.create(newAccountInfo);
+  const [newAccount] = await Accounts.getById(newAccountID);
+  console.log(newAccount);
 
-  res.status(200).json(newAccount);
+  if (newAccount) {
+    res.status(201).json(newAccount);
+  } else {
+    res.status(400).json({ message: "Error creating new account" });
+  }
 });
 
-router.put("/:id", (req, res, next) => {
+router.put("/:id", async (req, res, next) => {
   // DO YOUR MAGIC
+  const { id } = req.params;
+  const updates = req.body;
+  const confirmation = await Accounts.updateById(id, updates);
+  if (confirmation) {
+    const [updatedAccount] = await Accounts.getById(id);
+    console.log(updatedAccount);
+    res.status(200).json(updatedAccount);
+  }
 });
 
 router.delete("/:id", (req, res, next) => {
