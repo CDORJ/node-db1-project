@@ -14,11 +14,17 @@ const getById = (id) => {
 
 const create = async (account) => {
   // DO YOUR MAGIC
-  const newAccount = await db("accounts").insert({
-    name: account.name,
-    budget: account.budget,
-  });
-  return newAccount;
+  const [matchesName] = await db("accounts").where({ name: account.name });
+
+  if (matchesName === undefined) {
+    const newAccount = await db("accounts").insert({
+      name: account.name,
+      budget: account.budget,
+    });
+    return newAccount;
+  } else {
+    return { matchesName: true };
+  }
 };
 
 const updateById = async (id, account) => {

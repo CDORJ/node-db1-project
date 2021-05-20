@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const Accounts = require("./accounts-model");
+const mw = require("./accounts-middleware");
 
 router.get("/", async (req, res, next) => {
   // DO YOUR MAGIC
@@ -19,19 +20,23 @@ router.get("/:id", async (req, res, next) => {
   }
 });
 
-router.post("/", async (req, res, next) => {
-  // DO YOUR MAGIC
-  const newAccountInfo = req.body;
-  const [newAccountID] = await Accounts.create(newAccountInfo);
-  const [newAccount] = await Accounts.getById(newAccountID);
-  console.log(newAccount);
+router.post(
+  "/",
+  mw.checkAccountPayload,
+  async (req, res, next) => {
+    // DO YOUR MAGIC
+    const result = await Accounts.create(req.body);
+    console.log("result", result);
 
-  if (newAccount) {
-    res.status(201).json(newAccount);
-  } else {
-    res.status(400).json({ message: "Error creating new account" });
-  }
-});
+    if (result.matchesName) {
+      req.body = result;
+      next();
+    } else {
+      res.status(201).json(req.body);
+    }
+  },
+  mw.checkAccountNameUnique
+);
 
 router.put("/:id", async (req, res, next) => {
   // DO YOUR MAGIC
@@ -40,7 +45,6 @@ router.put("/:id", async (req, res, next) => {
   const confirmation = await Accounts.updateById(id, updates);
   if (confirmation) {
     const [updatedAccount] = await Accounts.getById(id);
-    console.log(updatedAccount);
     res.status(200).json(updatedAccount);
   }
 });
