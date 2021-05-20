@@ -12,7 +12,7 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-router.get("/:id", async (req, res, next) => {
+router.get("/:id", mw.checkAccountId, async (req, res, next) => {
   // DO YOUR MAGIC
   const { id } = req.params;
 
@@ -35,27 +35,38 @@ router.post(
   async (req, res, next) => {
     // DO YOUR MAGIC
     try {
-      // const newAccountID = await Accounts.create(req.body);
-      // console.log("newAccountID --->", newAccountID);
-      // res.status(201).json(req.body);
+      const newAccountID = await Accounts.create(req.body);
+      res.status(201).json(req.body);
     } catch (error) {
       next(error);
     }
   }
 );
 
-router.put("/:id", async (req, res, next) => {
-  // DO YOUR MAGIC
-  const { id } = req.params;
-  const updates = req.body;
-  const confirmation = await Accounts.updateById(id, updates);
-  if (confirmation) {
-    const [updatedAccount] = await Accounts.getById(id);
-    res.status(200).json(updatedAccount);
-  }
-});
+router.put(
+  "/:id",
+  mw.checkAccountPayload,
+  mw.checkAccountId,
+  async (req, res, next) => {
+    // DO YOUR MAGIC
+    const { id } = req.params;
+    const updates = req.body;
 
-router.delete("/:id", async (req, res, next) => {
+    try {
+      await Accounts.updateById(id, updates);
+      const updatedAccount = await Accounts.getById(id);
+      if (updatedAccount === undefined) {
+        res.status(404).json({ message: "account not found" });
+      } else {
+        res.status(200).json(updatedAccount);
+      }
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+router.delete("/:id", mw.checkAccountId, async (req, res, next) => {
   // DO YOUR MAGIC
   const { id } = req.params;
   const [accountToDelete] = await Accounts.getById(id);
