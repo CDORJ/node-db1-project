@@ -24,6 +24,8 @@ exports.checkAccountPayload = (req, res, next) => {
   }
 };
 
+// TODO Get middleware functions to work properly.
+
 /* 
 I wasn't able to get these middleware functions to work like *TRUE* middleware, meaning that, in my understanding, it would need to work *WITHOUT* having to require the database directly into this file.
 
