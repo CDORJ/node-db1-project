@@ -69,7 +69,7 @@ router.put(
 router.delete("/:id", mw.checkAccountId, async (req, res, next) => {
   // DO YOUR MAGIC
   const { id } = req.params;
-  const [accountToDelete] = await Accounts.getById(id);
+  const accountToDelete = await Accounts.getById(id);
   const confirmation = await Accounts.deleteById(id);
 
   if (!accountToDelete) {
