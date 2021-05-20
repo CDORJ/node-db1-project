@@ -8,36 +8,29 @@ const getAll = () => {
 
 const getById = (id) => {
   // DO YOUR MAGIC
-  const specificAccount = db("accounts").where({ id });
-  return specificAccount;
+  const something = db("accounts").where({ id }).first();
+  return something;
 };
 
-const create = async (account) => {
+const create = async (newAccountInfo) => {
   // DO YOUR MAGIC
-  const [matchesName] = await db("accounts").where({ name: account.name });
-
-  if (matchesName === undefined) {
-    const newAccount = await db("accounts").insert({
-      name: account.name,
-      budget: account.budget,
-    });
-    return newAccount;
-  } else {
-    return { matchesName: true };
-  }
+  const newAccountID = await db("accounts").insert(newAccountInfo);
+  return newAccountID[0];
 };
 
-const updateById = async (id, account) => {
+const updateById = async (id, changes) => {
   // DO YOUR MAGIC
-  const updatedAccount = await db("accounts")
+  const numberOfAccountsUpdated = await db("accounts")
     .where({ id })
-    .update({ name: account.name, budget: account.budget });
-  return updatedAccount;
+    .update(changes);
+  // console.log("numberOfAccountsUpdated ---> ", numberOfAccountsUpdated);
+  return numberOfAccountsUpdated;
 };
 
 const deleteById = async (id) => {
   // DO YOUR MAGIC
   const deletedAccount = await db("accounts").where({ id }).del();
+  console.log("deletedAccount ---> ", deletedAccount);
   return deletedAccount;
 };
 

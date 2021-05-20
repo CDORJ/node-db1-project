@@ -4,38 +4,44 @@ const mw = require("./accounts-middleware");
 
 router.get("/", async (req, res, next) => {
   // DO YOUR MAGIC
-  const accounts = await Accounts.getAll();
-  res.status(200).json(accounts);
+  try {
+    const accounts = await Accounts.getAll();
+    res.status(200).json(accounts);
+  } catch (error) {
+    next(error);
+  }
 });
 
 router.get("/:id", async (req, res, next) => {
   // DO YOUR MAGIC
   const { id } = req.params;
-  const [specificAccount] = await Accounts.getById(id);
 
-  if (!specificAccount) {
-    res.status(404).json({ message: "account not found" });
-  } else {
-    res.status(200).json(specificAccount);
+  try {
+    const specificAccount = await Accounts.getById(id);
+    if (specificAccount === undefined) {
+      res.status(404).json({ message: "account not found" });
+    } else {
+      res.status(200).json(specificAccount);
+    }
+  } catch (error) {
+    next(error);
   }
 });
 
 router.post(
   "/",
   mw.checkAccountPayload,
+  mw.checkAccountNameUnique,
   async (req, res, next) => {
     // DO YOUR MAGIC
-    const result = await Accounts.create(req.body);
-    console.log("result", result);
-
-    if (result.matchesName) {
-      req.body = result;
-      next();
-    } else {
-      res.status(201).json(req.body);
+    try {
+      // const newAccountID = await Accounts.create(req.body);
+      // console.log("newAccountID --->", newAccountID);
+      // res.status(201).json(req.body);
+    } catch (error) {
+      next(error);
     }
-  },
-  mw.checkAccountNameUnique
+  }
 );
 
 router.put("/:id", async (req, res, next) => {

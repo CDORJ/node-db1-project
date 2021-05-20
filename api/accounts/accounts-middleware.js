@@ -2,8 +2,7 @@ const { json } = require("express");
 
 exports.checkAccountPayload = (req, res, next) => {
   // DO YOUR MAGIC
-  const { name } = req.body;
-  const { budget } = req.body;
+  const { name, budget } = req.body;
 
   if (name === undefined || budget === undefined) {
     res.status(400).json({ message: "name and budget are required" });
@@ -20,16 +19,13 @@ exports.checkAccountPayload = (req, res, next) => {
       .status(400)
       .json({ message: "budget of account is too large or too small" });
   } else {
-    req.body.name = name.trim();
+    req.body.name = req.body.name.trim();
     next();
   }
 };
 
 exports.checkAccountNameUnique = async (req, res, next) => {
   // DO YOUR MAGIC
-  if (req.body.matchesName) {
-    res.status(400).json({ message: "that name is taken" });
-  }
 };
 
 exports.checkAccountId = async (req, res, next) => {
