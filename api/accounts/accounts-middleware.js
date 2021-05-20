@@ -24,6 +24,14 @@ exports.checkAccountPayload = (req, res, next) => {
   }
 };
 
+/* 
+I wasn't able to get these middleware functions to work like *TRUE* middleware, meaning that, in my understanding, it would need to work *WITHOUT* having to require the database directly into this file.
+
+Doing so would make it unusable in other projects, therefore defeating the purpose of middleware. For that, I could have just created the middleware helper functions right in the router file itself.
+
+I'm sure there's a way to do it. I just wasn't able to figure it out.
+*/
+
 exports.checkAccountNameUnique = async (req, res, next) => {
   // DO YOUR MAGIC
   next();
